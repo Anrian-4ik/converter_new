@@ -7,8 +7,14 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+
+      - name: Create pip constraints
+        run: echo "charset-normalizer==2.1.1" > /home/runner/constraints.txt
+
       - name: Build APK
         uses: digreatbrian/buildozer-action@v2
+        env:
+          PIP_CONSTRAINT: /home/runner/constraints.txt
         with:
           python-version: 3.8
           buildozer-cmd: buildozer -v android debug
